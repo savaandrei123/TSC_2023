@@ -10,3 +10,6 @@
  git config --global --list
  git config --global credential.helper store 
  pwd - afiseaza directorul curent
+ 
+ Tema:
+ 1.Cum fac sa sterg credentialele
