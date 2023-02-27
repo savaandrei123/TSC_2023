@@ -3,3 +3,6 @@
 1. Instalare Ubuntu 
 2. Instalare VS Code
 3. Accesare link-uri pe slack
+ 
+ Lab 2:
+ git status
