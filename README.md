@@ -10,6 +10,7 @@
  git config --global --list
  git config --global credential.helper store 
  pwd - afiseaza directorul curent
+ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
  
  Tema:
  1.Cum fac sa sterg credentialele
