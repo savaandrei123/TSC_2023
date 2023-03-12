@@ -16,6 +16,7 @@ import instr_register_pkg::*;  // user-defined types are defined in instr_regist
  input  opcode_t       opcode,
  input  address_t      write_pointer,
  input  address_t      read_pointer,
+ output operand_t      res,
  output instruction_t  instruction_word
 );
   timeunit 1ns/1ns;
@@ -26,10 +27,10 @@ import instr_register_pkg::*;  // user-defined types are defined in instr_regist
   always@(posedge clk, negedge reset_n)   // write into register
     if (!reset_n) begin
       foreach (iw_reg[i])
-        iw_reg[i] = '{opc:ZERO,default:0};  // reset to all zeros
+        iw_reg[i] = '{opc:ZERO, op_a:0, op_b:0, res:0};  // reset to all zeros
     end
     else if (load_en) begin
-      iw_reg[write_pointer] = '{opcode,operand_a,operand_b};
+      iw_reg[write_pointer] = '{opcode,operand_a,operand_b,res};
     end
 
   // read from the register

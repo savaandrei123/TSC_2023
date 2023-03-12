@@ -17,7 +17,7 @@ module top;
   logic          load_en; // load_enable
   logic          reset_n; //reset_negative
   opcode_t       opcode;   
-  operand_t      operand_a, operand_b;
+  operand_t      operand_a, operand_b, res;
   address_t      write_pointer, read_pointer;
   instruction_t  instruction_word;
 
@@ -28,6 +28,7 @@ module top;
     .reset_n(reset_n),
     .operand_a(operand_a),
     .operand_b(operand_b),
+    .res(res),
     .opcode(opcode),
     .write_pointer(write_pointer),
     .read_pointer(read_pointer),
@@ -41,6 +42,7 @@ module top;
     .reset_n(reset_n),
     .operand_a(operand_a),
     .operand_b(operand_b),
+    .res(res),
     .opcode(opcode),
     .write_pointer(write_pointer),
     .read_pointer(read_pointer),

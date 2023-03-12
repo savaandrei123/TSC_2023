@@ -12,6 +12,7 @@ module instr_register_test
    output logic          reset_n,
    output operand_t      operand_a,
    output operand_t      operand_b,
+   output operand_t      res,
    output opcode_t       opcode,
    output address_t      write_pointer,
    output address_t      read_pointer,
@@ -39,7 +40,7 @@ module instr_register_test
 
     $display("\nWriting values to register stack...");
     @(posedge clk) load_en = 1'b1;  // enable writing to register
-    repeat (3) begin
+    repeat (10) begin
       @(posedge clk) randomize_transaction;
       @(negedge clk) print_transaction;
     end
@@ -77,20 +78,37 @@ module instr_register_test
     operand_b     <= $unsigned($random)%16;            // between 0 and 15
     opcode        <= opcode_t'($unsigned($random)%8);  // between 0 and 7, cast to opcode_t type
     write_pointer <= temp++;
+    res           <= calc_res(operand_a,operand_b,opcode);
   endfunction: randomize_transaction
+  
+  function int calc_res(operand_t a, operand_t b,opcode_t opcode);
+    case(opcode)
+    PASSA:return a;
+    PASSB:return b;
+    ZERO:return 0;
+    MOD:return a%b;
+    ADD:return a+b;
+    SUB:return a-b;
+    MULT:return a*b;
+    DIV:return a/b;
+    endcase
+  endfunction
+
 
   function void print_transaction;
     $display("Writing to register location %0d: ", write_pointer);
     $display("  opcode = %0d (%s)", opcode, opcode.name);
     $display("  operand_a = %0d",   operand_a);
-    $display("  operand_b = %0d\n", operand_b);
+    $display("  operand_b = %0d", operand_b);
+    $display("  res = %0d\n",         res);
   endfunction: print_transaction
 
   function void print_results;
     $display("Read from register location %0d: ", read_pointer);
     $display("  opcode = %0d (%s)", instruction_word.opc, instruction_word.opc.name);
     $display("  operand_a = %0d",   instruction_word.op_a);
-    $display("  operand_b = %0d\n", instruction_word.op_b);
+    $display("  operand_b = %0d", instruction_word.op_b);
+    $display("  res = %0d\n",       instruction_word.res);
   endfunction: print_results
 
 endmodule: instr_register_test
